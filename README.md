@@ -40,7 +40,7 @@ public class DeDup {
         System.out.println("Deduped Array In Insertion Order2: "+Arrays.toString(deDupArr));
         return deDupArr;
     }
-  //Below is way to remove the duplicates in integer array in ascending order
+  //Below is the way to remove the duplicates in integer array in ascending order
     public int[] removeDupsInAscendingOrder(int[] dupArr) {
     	Set<Integer> set = new TreeSet<Integer>();
     	for(int i : dupArr) {
