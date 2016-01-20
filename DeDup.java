@@ -1,7 +1,5 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -11,14 +9,14 @@ public class DeDup {
                                    20,17,8,15,6,2,5,10,14,12,13,7,8,9,1,2,15,12,18,10,14,20,17,16,3,6,19,
                                    13,5,11,4,7,19,16,5,9,12,3,20,7,15,17,10,6,1,8,18,4,14,13,2,11};
 
-    //Below is the best way to remove the duplicates in integer array in original order 
+    //Below is the best way to remove the duplicates in integer array in original order using collections
     public int[] removeDupsInInsertionOrder1(int[] dupArr) {    	
     	Set<Integer> set = new LinkedHashSet<Integer>();    	
     	int[] deDupArr = new int[dupArr.length];
         int i = 0;
-        for (int value : dupArr) {
-            if (set.add(value)) {
-            	deDupArr[i++] = value;
+        for (int j : dupArr) {
+            if (set.add(j)) {
+            	deDupArr[i++] = j;
             }
         }
         deDupArr = Arrays.copyOf(deDupArr, i);
@@ -26,39 +24,45 @@ public class DeDup {
         System.out.println("Deduped Array In Insertion Order1: "+Arrays.toString(deDupArr));
         return deDupArr;
     }    
-    //Another way to remove the duplicates in integer array in original order.But this will take more time when comparing with method1
+    //Another way to remove the duplicates in integer array in original order without using collections.
     public int[] removeDupsInInsertionOrder2(int[] dupArr) {
-        List<Integer> list = new ArrayList<Integer>();
-        int[] deDupArr = new int[dupArr.length];
-        int i = 0;
-        for (int value : dupArr) {
-            if (!list.contains(value)) {
-            	list.add(value);
-            	deDupArr[i++] = value;
-            }
+        int deDupArr[] = new int[dupArr.length];
+        int j=0;
+        boolean flag = false;
+        for (int i : dupArr) {
+        	for (int k : deDupArr) {
+        		if(k == i) {
+        			flag = true;
+        			break;
+        		}
+        		else
+        			flag = false;
+        	}
+        	if(!flag) {
+        		deDupArr[j++] = i;
+    		}
         }
-        deDupArr = Arrays.copyOf(deDupArr, i);
-        list.clear();
+        deDupArr = Arrays.copyOf(deDupArr, j);
         System.out.println("Deduped Array In Insertion Order2: "+Arrays.toString(deDupArr));
         return deDupArr;
     }
-    //Below is the way to remove the duplicates in integer array in ascending order
+    //Below is the best way to remove the duplicates in integer array in ascending order using collections
     public int[] removeDupsInAscendingOrder(int[] dupArr) {
     	Set<Integer> set = new TreeSet<Integer>();
     	for(int i : dupArr) {
     		set.add(i);
     	}
     	int[] deDupArr = new int[set.size()];
-        int input = 0;
-        for (Integer j : set) {
-        	deDupArr[input++] = j;
+        int j = 0;
+        for (Integer k : set) {
+        	deDupArr[j++] = k;
         }
         set.clear();
         System.out.println("Deduped Array In Ascending Order: "+Arrays.toString(deDupArr));
         return deDupArr;
-    }
-   
-    public static void main(String [] args) {
+    }    
+       
+    public static void main(String[] args) {
     	DeDup obj = new DeDup();
     	try {
 	    	obj.removeDupsInInsertionOrder1(obj.randomIntegers);
